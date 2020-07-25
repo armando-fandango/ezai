@@ -1,0 +1,3 @@
+#to send data to clusters
+rsync -azP --delete ~/datasets/ritis $1:~/datasets
+

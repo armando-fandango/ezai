@@ -1,0 +1,19 @@
+# docker-compose.yml
+version: '3'
+services:
+  ezai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${iname}
+    container_name: ${cname}
+    user: $AI_UID:$AI_GID
+    working_dir: $AI_HOME
+    stdin_open: true
+    ports:
+      - 8888:8888
+      - 6006:6006
+    volumes:
+    tty: true
+    command: tail -f /dev/null
+

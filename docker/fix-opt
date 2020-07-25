@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source .env
+
+sudo chown -R $(id -u).$(id -g) /opt/conda

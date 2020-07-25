@@ -1,0 +1,32 @@
+{
+  "road" : [
+    "1",
+    "101"
+  ],
+  "direction":[
+    "N",
+    "S"
+  ],
+  "n_vx": [
+    1
+  ],
+  "n_agg": [
+    5
+  ],
+  "derived_features": [
+    "f",
+    "sf",
+    "tf",
+    "stf"
+  ],
+  "mclass": [
+    "LSTM_Keras",
+    "GRU_Keras",
+    "BiLSTM_Keras",
+    "BiGRU_Keras"
+  ],
+  "n_layers": [
+    1,
+    2
+  ]
+}

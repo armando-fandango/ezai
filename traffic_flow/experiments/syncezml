@@ -1,0 +1,3 @@
+# to send ezml to clusters
+rsync -azP --delete --exclude '__pycache__' ~/phd/ezml $1:~/phd
+

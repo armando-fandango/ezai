@@ -1,0 +1,20 @@
+{
+  "n_tx": 24,
+  "n_ty": 12,
+  "n_vx": 1,
+  "n_vy": 1,
+  "n_agg": 5,
+  "mclass": "RNN_Keras",
+  "n_epochs": 100,
+  "n_batch_size": 1024,
+  "lay_fname": "GRU",
+  "los_fname": "mse",
+  "opt_fname": "rmsprop",
+  "met_fnames": [
+    "mae",
+    "mape",
+    "smape"
+  ],
+  "bidir": false,
+  "source_data": "pems_d5"
+}

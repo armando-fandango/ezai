@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+folder="$HOME/traffic_flow_exp"
+rm $folder/data.tar.gz
+tar -cvzf "$folder/data.tar.gz" "$folder/data/n3_2"
+rm $folder/ezai.tar.gz
+tar -cvzf "$folder/ezai.tar.gz" "$HOME/projects/ezai"
+ls $folder/*.gz

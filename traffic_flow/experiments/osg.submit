@@ -1,0 +1,61 @@
+# The UNIVERSE defines an execution environment. You will almost always use VANILLA.
+Universe = vanilla
+
+# These are good base requirements for your jobs on OSG. It is specific on OS and
+# OS version, core cound and memory, and wants to use the software modules.
+
+Requirements = HAS_SINGULARITY == True
+request_cpus = 8
+request_memory = 8 GB
+request_disk = 8 GB
+
+# notify_user = armando@ucf.edu
+# notification = Always
+
+TID = $(Process)
+JID = $(Cluster)
+
++ProjectName = "predictTraffic"
+# +WantsStashCache = true
+
+# Singularity settings
++SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/tensorflow:latest"
+
+# EXECUTABLE is the program your job will run It's often useful
+# to create a shell script to "wrap" your actual work.
+Executable = osgrun.sh
+Arguments = $(JID) $(TID)
+
+initialdir = /home/armando
+
+# inputs/outputs
+transfer_input_files = data.tar.gz, ezml.tar.gz
+# transfer_output_files = /home/armando/expout/$(JID)-$(TID).zip
+transfer_output_files = exp/exp_out/$(Cluster)_$(TID)
+transfer_output_remaps = "$(Cluster)_$(TID) = expout/$(Cluster)_$(TID)"
+
+should_transfer_files = Yes
+when_to_transfer_output = ON_EXIT
+
+# ERROR and OUTPUT are the error and output channels from your job
+# that HTCondor returns from the remote host.
+Error = expout/logs/log_$(JID)_$(TID).txt
+Output = expout/logs/log_$(JID)_$(TID).txt
+
+# The LOG file is where HTCondor places information about your
+# job's status, success, and resource consumption.
+Log = expout/logs/log_$(JID)_$(TID)_osg.txt
+
+# Send the job to Held state on failure.
+#on_exit_hold = (ExitBySignal == True) || (ExitCode != 0)
+
+# Periodically retry the jobs every 1 hour, up to a maximum of 5 retries.
+#periodic_release =  (NumJobStarts < 5) && ((CurrentTime - EnteredCurrentStatus) > 60*60)
+
+# QUEUE is the "start button" - it launches any jobs that have been
+# specified thus far.
+# Queue 145800
+Queue 50000
+
+### OSG Notes
+### ln -s /stash/user/armando/datasets datasets

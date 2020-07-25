@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# TODO: instead of root, run as user
+# docker run -it --gpus all --name phd-gpu-1 -v ${HOME}/datasets:/root/datasets -v /home/armando/phd:/root/phd
+# -w /root/phd -p 8888:8888 -p 6006:6006 --user $(id -u):$(id -g) phd-gpu
+
+# Add this line to your ~/.bashrc
+alias eznb='conda activate ezai && jupyter notebook --ip=* --no-browser'
+#echo "alias eznb='conda activate ezai && jupyter notebook --ip=* --no-browser'" >> ${AI_HOME}/.bashrc &&\
+
+source .env
+
+dfile="Dockerfile"
+dfolder="."
+# ports exposed in format -p host-port:container-port
+
+# exec options
+evars=" -e COMPUTE=${compute} -e PROJECT=${project} -e DISPLAY "
+user="-u ${AI_UID}:${AI_GID}"
+xhost +  # for running GUI app in container
+
+if [ "$(docker image inspect $iname:latest > /dev/null 2>&1 && echo 1 || echo '')" ];
+then
+  echo "found image $iname"
+else
+  echo "creating image $iname"
+  if [ $compute = "gpu" ];
+  then
+    base="nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04"
+  else
+    base="ubuntu:18.04"
+  fi
+  barg=" --build-arg BASE=$base "
+  barg+=" --build-arg COMPUTE=$compute "
+#  barg+=" --build-arg AI_UID=${AI_UID} "
+#  barg+=" --build-arg AI_GID=${AI_GID} "
+#  barg+=" --build-arg AI_UNAME=${AI_UNAME} "
+  docker build -t $iname $barg -f $dfile $dfolder
+fi
+
+# HAVE TO CHECK FOR IMAGE AGAIN BECAUSE BULD FAILS SOMETIME
+if [ "$(docker image inspect $iname:latest > /dev/null 2>&1 && echo 1 || echo '')" ];
+then
+  if [ "$(docker ps -q -f name=$cname -f status=exited)" ];
+  then
+    echo "starting container $cname"
+    docker start $cname
+  fi
+  if [ "$(docker ps -q -f name=$cname -f status=running)" ];
+  then
+    echo "entering started container $cname"
+    docker exec -it $user $wfolder $evars $cname bash
+  else
+    echo "creating, starting and then entering container $cname"
+    docker run -it --gpus all --name $cname  \
+      $user $wfolder $evars $vfolders $cports $iname bash
+  fi
+else
+   echo "not created image $iname"
+fi
+

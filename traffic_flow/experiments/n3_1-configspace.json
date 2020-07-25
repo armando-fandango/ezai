@@ -1,0 +1,38 @@
+{
+  "hyperparameters": [
+    {
+      "name": "act_fname",
+      "type": "categorical",
+      "choices": [
+        "relu",
+        "tanh",
+        "sigmoid"
+      ],
+      "default": "relu"
+    },
+    {
+      "name": "n_units",
+      "type": "categorical",
+      "choices": [
+        24,
+        36,
+        48
+      ],
+      "default": 24
+    },
+    {
+      "name": "opt_fname",
+      "type": "categorical",
+      "choices": [
+        "rmsprop",
+        "adam",
+        "adagrad"
+      ],
+      "default": "rmsprop"
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.11",
+  "json_format_version": 0.1
+}
