@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-source $(conda info --base)/etc/profile.d/conda.sh
-
+#TODO This line doesnt work in cygwin
+if [[ "${OSTYPE}" == 'cygwin' ]]
+then
+    # set -o igncr
+    export SHELLOPTS
+else
+  source $(conda info --base)/etc/profile.d/conda.sh
+fi
 # add -k if ssl_verify needs to be set to false
 opts="-c conda-forge --override-channels --strict-channel-priority"
 pkgs="jupyter notebook jupyter_contrib_nbextensions jupyter_nbextensions_configurator"
