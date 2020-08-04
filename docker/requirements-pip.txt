@@ -1,0 +1,12 @@
+smac[all] #https://automl.github.io/SMAC3/master/
+pmdarima
+tensorflow>=2.2.0
+torch
+torchvision
+fastai
+cutecharts
+neo4j
+  #      - allennlp
+  #      - pytext-nlp # from facebook
+  #      - corenlp #from stanford
+mlagents #(for unity)
