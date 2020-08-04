@@ -4,7 +4,7 @@
 if [[ "${OSTYPE}" == 'cygwin' ]]
 then
     # set -o igncr
-    export SHELLOPTS
+    source /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
 else
   source $(conda info --base)/etc/profile.d/conda.sh
 fi

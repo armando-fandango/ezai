@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+# run these commands in cygwin manually for now
 
 export SHELLOPTS
 set –o igncr
-. /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
+source /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
+
 # conda activate base
