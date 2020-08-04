@@ -1,4 +1,6 @@
-set –o igncr
+#!/usr/bin/env bash
+
 export SHELLOPTS
-source /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
+set –o igncr
+. /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
 # conda activate base
