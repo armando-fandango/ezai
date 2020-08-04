@@ -76,13 +76,13 @@ WORKDIR /root/
 COPY conda-update-base.sh /root/
 RUN ./conda-update-base.sh && rm conda-update-base.sh
 # keeping it separate to take advantage of image cache
-COPY conda-ez-create* /root/
-RUN ./conda-ez-create.sh && \
-    rm conda-ez-create*
+COPY ez-conda-create* requirements* /root/
+RUN ./ez-conda-create.sh /opt/conda/envs/ezai && \
+    rm ez-conda-create*
 
-COPY conda-ez-update* /root/
-RUN ./conda-ez-update.sh && \
-    rm conda-ez-update*
+#COPY conda-ez-update* /root/
+#RUN ./conda-ez-update.sh && \
+#    rm conda-ez-update*
 
     #&& \
     #echo "alias eznb='conda activate ezai && jupyter notebook --ip=* --no-browser'" >> ${AI_HOME}/.bashrc &&\

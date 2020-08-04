@@ -1,6 +1,14 @@
 smac[all] #https://automl.github.io/SMAC3/master/
+# needed for smac
+lazy_import
+pynisher
+ConfigSpace
+pyrfr
+# needed for smac
 pmdarima
 tensorflow>=2.2.0
+tensorboard
+tensorboard-plugin-wit
 torch
 torchvision
 fastai

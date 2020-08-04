@@ -13,7 +13,7 @@ jupyter
 notebook
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
-rapids==0.14
+#rapids==0.14
 #graph related
 networkx
 # text related
@@ -46,6 +46,8 @@ scipy
 arviz
     # ml/dl related
 statsmodels
+scikit-learn
+#scikit-optimize
 gym
     # datasets
 kaggle     # only needed for kaggle plugin
@@ -61,9 +63,6 @@ python-snappy
   #  - fastparquet
 pyarrow
   #  - blas>=1=mkl
-gxx_linux-64 # required for smac
-gcc_linux-64 # required for smac
-swig # required for smac
     #- r
     #- r-irkernel
     #- tini
@@ -80,4 +79,23 @@ phik
 bidict
     # code formatting
 yapf
-
+# **** required by pips
+# next required by smac
+gxx_linux-64 # required for smac
+gcc_linux-64 # required for smac
+swig # required for smac
+# required by smac end
+# required by tf
+absl-py
+wrapt
+astunparse
+termcolor
+opt_einsum
+gast
+# required by tf ends
+# required by tensorboard
+grpcio
+markdown
+werkzeug
+google-auth-oauthlib
+# required by tensorboard

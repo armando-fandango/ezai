@@ -18,7 +18,7 @@ def tfds(x,y):
     return tf.data.Dataset.from_tensor_slices((x, y))
 
 def gpu_test():
-
+    result = True
     if tf.test.is_built_with_cuda():
         l.info('TensorFlow CUDA version is installed')
         if tf.test.gpu_device_name():
@@ -26,5 +26,9 @@ def gpu_test():
             l.info('# of GPU Devices:{}'.format(len(tf.config.list_physical_devices('GPU'))))
         else:
             l.info('TensorFlow could not detect any GPU')
+            result = False
     else:
         l.info('TensorFlow CPU version is installed')
+        result = False
+
+    return result
