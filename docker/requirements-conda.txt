@@ -47,7 +47,7 @@ arviz
     # ml/dl related
 statsmodels
 scikit-learn
-scikit-posthocs
+#scikit-posthocs
 #scikit-optimize
 gym
     # datasets
@@ -82,8 +82,8 @@ bidict
 yapf
 # **** required by pips
 # next required by smac
-gxx_linux-64 # required for smac
-gcc_linux-64 # required for smac
+#gxx_linux-64 # required for smac
+#gcc_linux-64 # required for smac
 swig # required for smac
 # required by smac end
 # required by tf

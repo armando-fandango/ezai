@@ -32,7 +32,7 @@ conda activate $venv || \
     #jupyter nbextension enable ipyparallel && \
 
 conda activate $venv && \
-    conda install -y -p $venv $opts --file $(dirname "$(readlink -f -- '${BASH_SOURCE}/requirements-conda.txt')") && \
-    pip install --no-deps --use-feature 2020-resolver -r $(dirname "$(readlink -f -- '${0}/requirements-pip.txt')")
+    conda install -y -p $venv $opts --file ./requirements-conda.txt')") && \
+    pip install --no-deps --use-feature 2020-resolver -r ./requirements-pip.txt')")
 
 
