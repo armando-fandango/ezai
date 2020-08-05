@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 
-#TODO This line doesnt work in cygwin
+#TODO This line doesnt work in source-conda.sh
 if [[ "${OSTYPE}" == 'cygwin' ]]
 then
-    # set -o igncr
+    # set -o igncr # execute it manually in source-conda.sh for now it doesnt work
+    # export SHELLOPTS # should be after or before set ?
     source /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
 else
   source $(conda info --base)/etc/profile.d/conda.sh
 fi
 # add -k if ssl_verify needs to be set to false
-opts="-c conda-forge --override-channels --strict-channel-priority"
+opts="-c conda-forge --strict-channel-priority"
 pkgs="jupyter notebook jupyter_contrib_nbextensions jupyter_nbextensions_configurator"
 if [ -z "$1" ]
 then
-  venv="./ezai-env"
+  venv="/opt/conda/envs/ezai"
 else
   venv=$1
 fi
