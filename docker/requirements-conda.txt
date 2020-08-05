@@ -47,6 +47,7 @@ arviz
     # ml/dl related
 statsmodels
 scikit-learn
+scikit-posthocs
 #scikit-optimize
 gym
     # datasets
