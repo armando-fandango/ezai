@@ -3,6 +3,7 @@
 #TODO This line doesnt work in source-conda.sh
 if [[ "${OSTYPE}" == 'cygwin' ]]
 then
+    true
     # set -o igncr # execute it manually for now it doesnt work
     # export SHELLOPTS # should be after or before set ?
     # source /cygdrive/c/Miniconda3/etc/profile.d/conda.sh
