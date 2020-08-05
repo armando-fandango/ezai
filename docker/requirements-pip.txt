@@ -9,8 +9,8 @@ pmdarima
 tensorflow>=2.2.0
 tensorboard
 tensorboard-plugin-wit
-torch
-torchvision
+#torch
+#torchvision
 fastai
 cutecharts
 neo4j
