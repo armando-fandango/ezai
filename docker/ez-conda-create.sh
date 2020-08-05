@@ -20,7 +20,7 @@ else
 fi
 
 conda activate $venv || \
-    (echo "venv doesnt exist - creating now..." && \
+    (echo "${venv} doesnt exist - creating now..." && \
     conda create -y -p $venv $opts python=3.7 $pkgs && \
     conda activate $venv && \
     conda config --env --prepend channels conda-forge && \
@@ -32,7 +32,7 @@ conda activate $venv || \
     #jupyter nbextension enable ipyparallel && \
 
 conda activate $venv && \
-    conda install -y -p $venv $opts --file $(dirname "$(readlink -f -- '${0}/requirements-conda.txt')") && \
-    pip install --no-deps --use-feature 2020-resolver -r $(dirname $0)/requirements-pip.txt
+    conda install -y -p $venv $opts --file $(dirname "$(readlink -f -- '${BASH_SOURCE}/requirements-conda.txt')") && \
+    pip install --no-deps --use-feature 2020-resolver -r $(dirname "$(readlink -f -- '${0}/requirements-pip.txt')")
 
 
