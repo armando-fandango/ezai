@@ -33,7 +33,7 @@ conda activate $venv || \
 
 conda activate $venv && \
     conda install -y -p $venv $opts --file ./requirements-conda.txt && \
-    conda install pytorch torchvision -c pytorch
+    conda install pytorch torchvision -c pytorch && \
     pip install --no-deps --use-feature 2020-resolver -r ./requirements-pip.txt
 
 
