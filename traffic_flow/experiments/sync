@@ -33,6 +33,6 @@ done
 [[ -z "$TO" ]] && TO=""  || TO="${TO}:"
 
 CMD="rsync -azP --delete ${FROM}~/traffic_flow_exp/data ${TO}~/traffic_flow_exp"
-[[ -z DATA ]] || eval "${CMD}"
+[[ -z DATA ]] && eval "${CMD}"
 CMD="rsync -azP --delete --exclude '__pycache__' ${FROM}~/projects/ezai ${TO}~/projects"
-[[ -z EZAI ]] || eval "${CMD}"
+[[ -z EZAI ]] && eval "${CMD}"

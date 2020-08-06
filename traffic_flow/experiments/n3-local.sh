@@ -4,6 +4,7 @@
 
 #[[ -z "${DEPLOY_ENV}" ]] && MyVar='default' || MyVar="${DEPLOY_ENV}"
 
+# We might have data set, its subset and subset....
 export EXP_ID='n3_1'
 export EXP_IID='local_test'
 export EXP_DID='samiul_i75'

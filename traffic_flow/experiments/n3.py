@@ -12,6 +12,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # or any {'0', '1', '2', '3'}
 
 #EXP_ROOT = os.path.join(os.path.expanduser('~'), 'phd')
 
+#TODO Replace os.path with pathlib.Path
+
 # load ezai
 #TODO: Take this setting to top so we can change at will
 EZAI_ROOT=os.path.join(os.path.expanduser('~'),'projects','ezai')

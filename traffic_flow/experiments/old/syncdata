@@ -1,0 +1,11 @@
+#to send data to clusters
+#rsync -azP --delete ~/traffic_flow_exp/ritis $1:~/datasets
+#if [ $1 = "osg" ]; then
+#    rm ~/traffic_flow_exp/data/*.gz
+#    for i in ~/traffic_flow_exp/data/*/; do tar -C "$HOME/traffic_flow_exp/data/" -cvzf "$HOME/traffic_flow_exp/data/$(basename $i).tar.gz" "$(basename $i)"; done
+#    rsync -azP --delete ~/traffic_flow_exp/data/*.gz $1:~/traffic_flow_exp/data/
+#    rm ~/traffic_flow_exp/data/*.gz
+#else
+
+rsync -azP --delete ~/traffic_flow_exp/data $1:~/traffic_flow_exp
+#fi
