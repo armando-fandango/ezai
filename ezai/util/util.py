@@ -12,7 +12,6 @@ from six.moves import urllib
 from ezai.util.archive import archive_extract
 from ezai.util import filesystem_util
 from ezai.util import log_util
-import kaggle
 
 l = log_util.get_logger()
 
@@ -53,6 +52,7 @@ def dataset_download_kaggle(dataset_name,dest_dir,kaggle_user=None, kaggle_key=N
             os.environ['KAGGLE_USER'] = kaggle_user
         if kaggle_key is not None:
             os.environ['KAGGLE_KEY'] = kaggle_key
+        import kaggle # because it tries to authenticate at import
         kaggle.api.authenticate()
         kaggle.api.dataset_download_files(dataset_name, path=dest_dir,
                                           unzip=extract)
