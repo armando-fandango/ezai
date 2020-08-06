@@ -28,17 +28,18 @@ export TID=${SLURM_ARRAY_TASK_ID}
 
 ### Common
 
-export EXPID=$1
-export EXPDID=$2
+export EXP_ID=$1
+export EXP_IID=$2
+export EXP_DID=$3
 
-export EXPOUT="${HOME}/phd/expout"
-export EXPLOGS="${EXPOUT}/logs"  #make it manually in newton else it wont work
+export EXP_OUT="${HOME}/phd/expout"
+export EXP_LOGS="${EXPOUT}/logs"  #make it manually in newton else it wont work
 #mkdir -p ${EXPOUT}
-mkdir -p ${EXPLOGS}
+mkdir -p ${EXP_LOGS}
 
 ### inside loop common
 
-export EXPLOG="${EXPLOGS}/${JID}-${TID}.txt"
+export EXP_LOG="${EXP_LOGS}/${JID}-${TID}.txt"
 export EXPRUN_COMMAND="python3 ${HOME}/phd/ezml/experiments/n11.py --expid=${EXPID} --exptid=${TID} --expdid=${EXPDID} --expout=${EXPOUT}"
 #export EXPRUN_COMMAND="python3 ${HOME}/phd/ezml/experiments/n11.py --expid=${EXPID} --exptid=${NEW_TID} --expout=${EXPOUT}" # for jobs above 1000
 
@@ -63,9 +64,9 @@ eval "${EXPRUN_COMMAND}"
 sleep 3
 
 # move the log files
-export EXPLOGS1="${EXPOUT}/${EXPID}/logs"
-mkdir -p ${EXPLOGS1}
-export EXPLOG1="${EXPLOGS1}/${TID}.txt"
+export EXP_LOGS1="${EXP_OUT}/${EXP_ID}/logs"
+mkdir -p ${EXP_LOGS1}
+export EXP_LOG1="${EXP_LOGS1}/${TID}.txt"
 #export EXPLOG1="${EXPLOGS1}/${NEW_TID}.txt" # for jobs above 1000
 
-mv ${EXPLOG} ${EXPLOG1}
+mv ${EXP_LOG} ${EXP_LOG1}

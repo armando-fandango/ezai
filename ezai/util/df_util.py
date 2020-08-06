@@ -11,19 +11,49 @@ def get_first_dt_col(df):
             break
     return dt_col
 
-def as_ordered_category(series, order_type = str, ascending=True):
-    cats = series.unique()
-    original_type = type(cats[0])
-    if isinstance(cats,np.ndarray):
-        cats = np.sort(cats)
-        if not ascending:
-            cats = np.flipud(cats)
-    else: #isinstance(cats,pd.Categorical):
-        cats = sorted(cats.astype(order_type), reverse=(not ascending))
-    cats = list(map(original_type,cats))
+# Note: for geo, the series has to be unique else it breaks everything
+# order type can either be string such as  int, str or geo or the list of categories itself
 
-    if not isinstance(cats,pd.Categorical):
+def as_ordered_category(series:pd.Series, order_type, ascending=True,
+                        pts=None):
+
+    #if isinstance(cats,np.ndarray):
+    #    raise ValueError('cant convert from numeric columns yet')
+    #    cats = np.sort(cats)
+    #    if not ascending:
+    #        cats = np.flipud(cats)
+    #else: #isinstance(cats,pd.Categorical):
+    original_type = type(series[0])
+
+    if isinstance(order_type,(pd.Index,list)):
+        cats = order_type
+    else:
+        if order_type=='geo':
+            cats = series.copy()
+            import geopandas as gpd
+            from shapely.geometry import Point
+            gs = gpd.GeoSeries(gpd.points_from_xy(pts.lon,pts.lat))
+            from shapely.geometry import Point
+            if ascending:
+                # find pt of lower right bound
+                pt = Point(gs.x.min(),gs.y.min())
+            else:
+                # find pt of upper left bound
+                pt = Point(gs.x.max(),gs.y.max())
+
+            # find pt closest to bound
+            idx = gs.distance(pt).sort_values().index
+            pt = gs[idx[0]]
+            # now sort the gdf with distance form this pt
+            idx = gs.distance(pt).sort_values().index
+            cats = cats.reindex(idx)
+        else:
+            cats = series.unique()
+            cats = sorted(cats.astype(order_type), reverse=(not ascending))
+
+    if not isinstance(series,pd.Categorical):
         series = series.astype('category')
+    cats = list(map(original_type,cats))
     series = series.cat.set_categories(cats, ordered=True)
     return series
 

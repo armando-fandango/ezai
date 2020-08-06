@@ -31,6 +31,8 @@ General Images size: w x h in inch
 2 col 7.2 to 7.5 (2244) x
 
 """
+#TODO: With mplleaflet
+
 # TODO: Basemap is not working, uncomment when its working
 # TODO: Since basemap is deprecated in favor of cartopy, add that
 
@@ -79,21 +81,27 @@ def map_with_basemap(df):
     plt.show()
 
 
-def map_with_geopandas(df, width=5, height=5):
+def map_with_geopandas(df, width=5, height=5, label=''):
     gdf = gpd.GeoDataFrame(df,geometry=gpd.points_from_xy(df.lon,df.lat))
     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
     # We restrict to South America.
-    ax = world[world.continent == 'North America'].plot(color='white',
+    ax = world[world.iso_a3 == 'USA'].plot(color='white',
                                                         figsize=(width,height),
                                                         edgecolor='black')
-
+    print(world)
     minx, miny, maxx, maxy = gdf.total_bounds
-    margin = 1.8 # buffer to add to the range
-    ax.set_xlim(minx-margin, maxx+margin)
-    ax.set_ylim(miny-margin, maxy+margin)
+    margin = 0.1 # buffer to add to the range
+    #ax.set_xlim(minx-margin, maxx+margin)
+    #ax.set_ylim(miny-margin, maxy+margin)
     # We can now plot our ``GeoDataFrame``.
-    gdf.plot(ax=ax, color='red')
+    plot = gdf.plot(ax=ax, color='red')
+
+    if label:
+        for x, y, label in zip(gdf.geometry.x, gdf.geometry.y, gdf[label]):
+            plot.annotate(label, xy=(x, y), xytext=(3, 3), textcoords="offset points")
+    #points_clip.apply(lambda x: ax.annotate(s=x['name'], xy=x.geometry.coords[0], xytext=(3, 3), textcoords="offset points"), axis=1)
+
     #plt.axis("off")
     ax.get_xaxis().set_ticks([])
     ax.get_yaxis().set_ticks([])
@@ -101,8 +109,9 @@ def map_with_geopandas(df, width=5, height=5):
 
 
 
-def map_with_folium(df, width=5, height=5 ):
+def map_with_folium(df, width=5, height=5, label='' ):
     # from inch to pixels at 300dpi
+    #TODO: Add id as label
     dpi = plt.gcf().dpi
     width = width  * dpi #55
     height = height * dpi  #55
@@ -118,14 +127,14 @@ def map_with_folium(df, width=5, height=5 ):
         folium.CircleMarker(
             location=(point.lat, point.lon),
             radius=1,
-            popup='id:{}'.format(point.id),
+            popup='{}:{}'.format(label,point[label]) if label else '',
             #fill=True,
             #fill_color='black'
             color='red').add_to(f_map)
 
 
     #use df.apply(,axis=1) to iterate through every row in your dataframe
-    df[['id','lat','lon']].apply(plotDot, axis=1)
+    df.apply(plotDot, axis=1)
 
     #Set the zoom to the maximum possible
     f_map.fit_bounds(f_map.get_bounds(), padding=(20, 20))
@@ -502,3 +511,29 @@ def image_display(images, titles=[], n_cols=1, figsize=(8,8)):
     fig.subplots_adjust(hspace = 0)
     fig.tight_layout()
     return fig,axs
+
+def bold_min_2levels(s):
+    is_min = [s2 for _,s1 in s.groupby(level=0) for s2 in list(s1 == s1.min()) ]
+    return ['font-weight: bold' if v else '' for v in is_min]
+
+def bold_min_1level(s):
+    is_min = s == s.min()
+    return ['font-weight: bold' if v else '' for v in is_min]
+
+def bold_max(s):
+    is_max = s == s.max()
+    return ['font-weight: bold' if v else '' for v in is_max]
+
+def textbf_min(s):
+    is_min = [s2 for _,s1 in s.groupby(level=0) for s2 in list(s1 == s1.min()) ]
+    return pd.Series(['\textbf{{{:2.3f}}}'.format(s1) if v else '{:2.3f}'.format(s1) for v,s1 in zip(is_min,s)],index=s.index)
+
+from IPython.display import display as ipd
+def show_df(df):
+    ipd(df.style.apply(bold_min_2levels,axis=1).format("{:2.3f}").set_table_styles([
+        {'selector':'th',
+         'props': [('text-align', 'center'),('border', '1px solid black')]},
+        {
+            'selector':'td',
+            'props': [('border', '1px solid black')]}
+    ]))

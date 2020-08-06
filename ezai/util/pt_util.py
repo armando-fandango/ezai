@@ -14,8 +14,10 @@ def gpu_test():
         l.info('Torch Current GPU Device # and name:{} {}'.format(torch.cuda.current_device(),
                                                                  torch.cuda.get_device_name(torch.cuda.current_device())))
         l.info('# of GPU Devices:{}'.format(torch.cuda.device_count()))
+        return True
     else:
         l.info('Torch could not detect any GPU')
+        return False
 
 def summary(model, input_size, batch_size=-1, device="cuda"):
 

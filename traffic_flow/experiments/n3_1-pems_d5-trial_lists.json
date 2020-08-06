@@ -11,7 +11,9 @@
     1
   ],
   "n_agg": [
-    5
+    5,
+    10,
+    15
   ],
   "derived_features": [
     "f",

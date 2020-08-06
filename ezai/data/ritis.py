@@ -224,7 +224,7 @@ class RITISDetector():
             'event': False
         })
 
-    def load_raw(self, kind=('meta', 'zone'), filetype = 'parquet', folder=None):
+    def load_raw(self, kind=[], filetype = 'parquet', folder=None):
         """
         Loads the CSV files for this dataset
 
@@ -232,11 +232,6 @@ class RITISDetector():
         :param folder: optional
         :return:
         """
-        if isinstance(kind, (list, set, tuple)):
-            kind = dict.fromkeys(kind, {})
-        elif isinstance(kind, str):
-            kind = {kind: {}}
-
         folder = folder or os.path.join(self.dataset_home,'raw')
 
         dtype_dict={'zone_id':'category',
@@ -261,8 +256,7 @@ class RITISDetector():
                     'occupancy': 'float',
                     'quality': 'string'
             }
-
-        for k, v in kind.items():  # ['meta','zone','lane','event']:
+        for k in ['meta'] + kind:  # ['meta','zone','lane','event']:
 
             if filetype == 'csv':
                 filename = os.path.join(folder, '{}.csv'.format(k))
@@ -276,36 +270,40 @@ class RITISDetector():
                 filename = os.path.join(folder, '{}.parquet'.format(k))
                 df = pd.read_parquet(filename, engine='pyarrow')
             else:
-                print('{} not supported yet.'.format(filetype))
+                raise ValueError('{} not supported yet.'.format(filetype))
+
             #self.df[k] = self.std_df(self.df[k],v['cols'] if 'cols' in v.keys() else None)
-            self.df[k] = self.std_df(df)
+
+            #1 Standardize the column names
+            #2 Filter the columns
+            #3 Standardize the column codes
+            df = df_util.std_colnames(df, STD_COLNAMES)
+            col_list = list(df.columns)
+            df = df_util.std_colcodes(df, STD_COLCODES)
+
+            #TODO: Why ?????
+            #4 replace - with _
+            for col in ['road']:
+                if col in col_list:
+                    df.loc[:, col] = df.loc[:, col].str.replace('-', '_')
+
+            #6 set columns as category - order the categories
+
+            #Geo sorted categoricals
+            if ID in col_list:
+                if k=='meta':
+                    df.loc[:, ID] = df_util.as_ordered_category(df.loc[:, ID],
+                                                            order_type = 'geo',
+                                                            ascending=True,
+                                                pts = df.loc[:,['lon','lat']])
+                else:
+                    df.loc[:, ID] = df_util.as_ordered_category(df.loc[:, ID],
+                                    self.df['meta'].loc[:, ID].cat.categories)
+
+            df = df_util.remove_unused_categories(df)
+
+            self.df[k] = df
         return self
-
-    def std_df(self, df):
-        """
-        #1 Standardize the column names
-        #2 Filter the columns
-        #3 Standardize the column codes
-        #4 replace - with _
-        #5 fix-types: make the dt of type date
-        #6 set columns as category - order the categories
-        """
-        df = df_util.std_colnames(df, STD_COLNAMES)
-        col_list = list(df.columns)
-        df = df_util.std_colcodes(df, STD_COLCODES)
-
-        for col in ['road']:
-            if col in col_list:
-                df.loc[:, col] = df.loc[:, col].str.replace('-', '_')
-
-        for col in [ID]:
-            if col in col_list:
-                df.loc[:, col] = df_util.as_ordered_category(df.loc[:, col],
-                                                    order_type = int,
-                                                    ascending=True)
-        df = df_util.remove_unused_categories(df)
-
-        return df
 
     def info(self):
 

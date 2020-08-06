@@ -1,5 +1,5 @@
 import numpy as np
-from . import np_util
+from .util import np_util
 
 class StandardScaler():
     def __init__(self):

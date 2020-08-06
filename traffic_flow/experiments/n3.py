@@ -9,7 +9,6 @@ import csv
 import numpy as np
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # or any {'0', '1', '2', '3'}
-import tensorflow as tf
 
 #EXP_ROOT = os.path.join(os.path.expanduser('~'), 'phd')
 
@@ -22,6 +21,11 @@ import ezai
 
 from ezai.util import util
 util.m_info([ezai])
+
+# TODO : uncomment this when done with experiments
+# from ezai.util import tf_util
+#if not tf_util.gpu_test():
+#    raise ValueError("Not using GPU")
 
 from ezai.util import util, filesystem_util, dict_util
 from ezai.util.filesystem_util import makedir
@@ -88,6 +92,7 @@ data_folder_str = '{}-{}-{}-{}-{}'.format(exp_conf.source_data,
 data_folder = os.path.join(os.path.expanduser('~'),
                            'traffic_flow_exp','data',exp_id,data_folder_str)
 
+# TODO: Can we find a way to sort the id_list here ?
 id_list = load_dict_from_json(os.path.join(data_folder,'id_list.json'))['id_list']
 trial, exp_conf.id = get_trial(trial, id_list)
 

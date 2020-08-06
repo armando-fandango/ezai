@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#TODO This line doesnt work in source-conda.sh
+# We imort conda command as sometimes it doesnt work otherwise
 if [[ "${OSTYPE}" == 'cygwin' ]]
 then
   export SHELLOPTS # should be after or before set ?
@@ -33,7 +33,7 @@ conda activate $venv || \
 
 conda activate $venv && \
     conda install -y -p $venv $opts --file ./requirements-conda.txt && \
-    conda install pytorch torchvision -c pytorch && \
+    conda install -y -p $venv pytorch torchvision -c pytorch && \
     pip install --no-deps --use-feature 2020-resolver -r ./requirements-pip.txt
 
 

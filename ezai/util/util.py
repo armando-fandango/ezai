@@ -12,7 +12,6 @@ from six.moves import urllib
 from ezai.util.archive import archive_extract
 from ezai.util import filesystem_util
 from ezai.util import log_util
-
 import kaggle
 
 l = log_util.get_logger()
@@ -186,3 +185,14 @@ class ExpTimer:
     @property
     def elapsedTimeInMin(self):
         return (self.stop_time - self.start_time) / 60
+
+def hypothesis(p, h1='', alpha=0.05):
+    if p > alpha:
+        return False, 'not enough evidence for: {} (fail to reject H0)'.format(h1)
+    else:
+        return True, 'significant evidence for: {} (reject H0)'.format(h1)
+
+
+
+
+

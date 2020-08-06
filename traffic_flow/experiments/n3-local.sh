@@ -8,7 +8,9 @@ export EXP_ID='n3_1'
 export EXP_IID='local_test'
 export EXP_DID='samiul_i75'
 export N_TID=2 #576
-while getopts ":e:i:d:n:tu" opt; do
+export N_OFFSET_TID=0
+
+while getopts ":e:i:d:n:o:tu" opt; do
   case $opt in
     e) EXP_ID="$OPTARG"
     ;;
@@ -17,6 +19,8 @@ while getopts ":e:i:d:n:tu" opt; do
     d) EXP_DID="$OPTARG"
     ;;
     n) N_TID="$OPTARG"
+    ;;
+    o) N_OFFSET_TID="$OPTARG"
     ;;
     t) EXP_TEST="-t"
     ;;
@@ -34,7 +38,7 @@ mkdir -p ${EXP_LOGS}
 
 #TODO: export JID= get time stamp here
 export JID=$(date +"%Y-%m-%d_%H-%M-%S")  #1
-for TID in $(seq 1 $N_TID)
+for TID in $(seq $(( $N_OFFSET_TID + 1 )) $(( $N_OFFSET_TID + $N_TID )))
 #{1..$N_TID}
 do
 

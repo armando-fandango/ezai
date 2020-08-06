@@ -8,7 +8,7 @@ from ezai.util import filesystem_util
 from ezai.util import log_util
 from ezai.util import dict_util
 from ezai.util import df_util
-from ezai.util import scalers
+from ezai import scalers
 
 import pandas as pd
 import numpy as np
@@ -46,9 +46,11 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
     zone = rd.df.zone
     meta = rd.df.meta
 
+    filesystem_util.makedir(expdata_home)
+
     # Get the proper grouping from meta for loop by road, direction
-    road_list = meta.road.unique().tolist()
-    dir_list = meta.road.unique().tolist()
+    road_list = list(meta.road.unique())
+    dir_list = list(meta.direction.unique())
     x_cols_list = [['speed'], ['speed', 'volume', 'occupancy']]
     n_vx_list = [len(l) for l in x_cols_list]
     n_agg_list = [5,10,15]
@@ -59,7 +61,7 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                             'n_agg':n_agg_list,
                             'derived_features':derived_features_list
                             },
-                           os.path.join(rd.subset_name, expdata_home, 'trial_lists.json'))
+                           os.path.join(expdata_home, 'trial_lists.json'))
 
     meta_gdf = meta.sort_values([ID]).groupby(['road', 'direction'],observed=True)
     print('# of ids:')
@@ -76,7 +78,7 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
     print('# of ids after filtering for n_adj_id = {}:'.format(n_adj_id))
     print(meta_gdf.id.count())
 
-    filesystem_util.makedir(expdata_home)
+
 
     for meta_idx, meta_grp in meta_gdf:
         # loop for getting contiguous id on each (highway, direction pair)
@@ -114,6 +116,9 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                 # Not saving first and last for spatial analysis purpose
                 dict_util.save_to_json({'id_list': id_list[1:-1]},
                                         os.path.join(parquet_folder, 'id_list.json'))
+                meta_grp.to_parquet(os.path.join(
+                    parquet_folder, 'meta.parquet'),
+                    engine='pyarrow')
                 id_dict = {}
 
                 #print('df',df.loc[df.id=='6399',:])
@@ -153,9 +158,6 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                     idf_y = idf_y.set_index(DT).loc[:,conf.y_cols]
                     id_dict[id_key] = (idf_x,idf_y)
                     # save interpolated data and metadata for each zone
-                    meta_grp.to_parquet(os.path.join(
-                        parquet_folder, '{}-meta.parquet'.format(id_key)),
-                        engine='pyarrow')
                     idf_x.to_parquet(os.path.join(parquet_folder,
                                                 '{}-x.parquet'.format(id_key)),
                                    engine='pyarrow')
