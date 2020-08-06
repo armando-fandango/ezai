@@ -5,15 +5,9 @@ import time
 import sys
 from contextlib import redirect_stdout, redirect_stderr
 
-PKG_PATH=Path.home() / 'projects' / 'ezai'
-PKG_PATH = str(PKG_PATH.resolve())
-if not PKG_PATH in sys.path:
-    sys.path.append(PKG_PATH)
-print(sys.path)
-from traffic_flow.experiments import n3
-
 # 1 : Let's get the arguments
 parser = ArgumentParser()
+parser.add_argument('-b', '--base_path', default=str(Path.home()))
 parser.add_argument('-e', '--exp_id')  # experiment id - e.g. e1_1
 parser.add_argument('-i', '--exp_iid')  # experiment instance id - e.g. local_1
 parser.add_argument('-d', '--exp_did')  # which data -e.g. pems_d5
@@ -27,12 +21,20 @@ parser.add_argument('-u', '--notune', help="don't auto-tune",
                     action="store_true")
 args = parser.parse_args()
 
-
 exp_id = args.exp_id
 exp_iid = args.exp_iid
 exp_did = args.exp_did
 n_tid = args.n_tid
 n_offset_tid = args.n_offset_tid
+base_path = Path(args.base_path)
+
+PKG_PATH=base_path / 'projects' / 'ezai'
+PKG_PATH = str(PKG_PATH.resolve())
+if not PKG_PATH in sys.path:
+    sys.path.append(PKG_PATH)
+print(sys.path)
+from traffic_flow.experiments import exp
+
 """
 while getopts ":e:i:d:n:o:tu" opt; do
   case $opt in
@@ -56,13 +58,14 @@ while getopts ":e:i:d:n:o:tu" opt; do
 done
 """
 
-exp_out = Path.home() / 'traffic_flow_exp' / 'out' / exp_id / exp_iid
-exp_logs = Path.home() / 'traffic_flow_exp' / 'logs'
+exp_out_path = base_path / 'traffic_flow_exp' / 'out' / exp_id / exp_iid
+exp_data_path = base_path / 'traffic_flow_exp' / 'data' / exp_id
+exp_logs_path = base_path / 'traffic_flow_exp' / 'logs'
 
 # TODO: export JID= get time stamp here
 jid = '{}-{}'.format(exp_iid, time.time())  # 1
 for tid in range(n_offset_tid + 1, n_offset_tid + n_tid + 1):
-    exp_log = exp_logs / "{}-{}.txt".format(jid, tid)
+    exp_log = exp_logs_path / "{}-{}.txt".format(jid, tid)
     #exp_code = Path.home() / 'projects' / 'ezai' / 'traffic_flow' / 'experiments' / 'n3.py'
     # EXPRUN_COMMAND="python3  "
     # EXPRUN_COMMAND+=" --exp_id=${EXP_ID} --exp_iid=${EXP_IID} "
@@ -74,11 +77,12 @@ for tid in range(n_offset_tid + 1, n_offset_tid + n_tid + 1):
         with redirect_stdout(file):
             with redirect_stderr(sys.stdout):
 
-                n3.n3(exp_id=exp_id,
+                exp.n3(exp_id=exp_id,
                    exp_iid=exp_iid,
                    exp_tid=tid,
                    exp_did=exp_did,
-                   exp_out=str(exp_out.resolve()),
+                   exp_out=str(exp_out_path.resolve()),
+                   exp_data=str(exp_data_path.resolve()),
                    autotune=not args.notune,
                    testmode=args.test)
 #    eval "${EXPRUN_COMMAND}"
@@ -86,8 +90,8 @@ for tid in range(n_offset_tid + 1, n_offset_tid + n_tid + 1):
 # 2>&1 this means redirect stderr to stdout
 
 # move the log files
-    exp_logs1 = exp_out / 'logs'
-    exp_logs1.mkdir(parents=True, exist_ok=True)
-    exp_log1 = exp_logs1 / '{}.txt'.format(tid)
+    exp_logs1_path = exp_out_path / 'logs'
+    exp_logs1_path.mkdir(parents=True, exist_ok=True)
+    exp_log1 = exp_logs1_path / '{}.txt'.format(tid)
     exp_log.replace(exp_log1)
     print(exp_log1)
