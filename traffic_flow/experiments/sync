@@ -32,8 +32,7 @@ done
 [[ -z "$FROM" ]] && FROM=""  || FROM="${FROM}:"
 [[ -z "$TO" ]] && TO=""  || TO="${TO}:"
 
-echo "rsync -azP --delete ${FROM}~/traffic_flow_exp/data ${TO}~/traffic_flow_exp"
-
-
-[[ -z DATA ]] || rsync -azP --delete ${FROM}~/traffic_flow_exp/data ${TO}~/traffic_flow_exp
-[[ -z EZAI ]] || rsync -azP --delete --exclude '__pycache__' ${FROM}~/projects/ezai ${TO}~/projects
+cmd="rsync -azP --delete ${FROM}~/traffic_flow_exp/data ${TO}~/traffic_flow_exp"
+[[ -z DATA ]] || eval "${CMD}"
+cmd="rsync -azP --delete --exclude '__pycache__' ${FROM}~/projects/ezai ${TO}~/projects"
+[[ -z EZAI ]] || eval "${CMD}"
