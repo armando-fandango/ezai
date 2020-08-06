@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #to send data to clusters
 #rsync -azP --delete ~/traffic_flow_exp/ritis $1:~/datasets
 #if [ $1 = "osg" ]; then
@@ -31,4 +33,4 @@ done
 [[ -z "$TO" ]] && TO=""  || TO="${TO}:"
 
 [[ -z DATA ]] || rsync -azP --delete ${FROM}~/traffic_flow_exp/data ${TO}~/traffic_flow_exp
-[[ -z CODE ]] || rsync -azP --delete --exclude '__pycache__' ${FROM}~/projects/ezai ${TO}~/projects
+[[ -z EZAI ]] || rsync -azP --delete --exclude '__pycache__' ${FROM}~/projects/ezai ${TO}~/projects
