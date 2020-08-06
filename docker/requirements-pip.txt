@@ -4,11 +4,14 @@ lazy_import
 pynisher
 ConfigSpace
 pyrfr
-# needed for smac
+# needed for smac end
 pmdarima
 tensorflow>=2.2.0
+# needed for tensorflow
 tensorboard
 tensorboard-plugin-wit
+keras-preprocessing
+# needed for tensorflow ends
 #torch
 #torchvision
 fastai

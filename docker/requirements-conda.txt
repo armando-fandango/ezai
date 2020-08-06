@@ -48,7 +48,7 @@ arviz
 statsmodels
 scikit-learn
 #scikit-posthocs
-#scikit-optimize
+scikit-optimize
 gym
     # datasets
 kaggle     # only needed for kaggle plugin
@@ -57,8 +57,6 @@ kaggle     # only needed for kaggle plugin
     #- boto3
     # other
 tqdm
-  #  - scikit-learn
-  #  - scikit-optimize
 opencv
 python-snappy
   #  - fastparquet
@@ -69,6 +67,7 @@ pyarrow
     #- tini
     #- rapids
 dask
+h5py
     #- ipyparallel
 hyperopt
     #- hyperas
@@ -81,10 +80,12 @@ bidict
     # code formatting
 yapf
 # **** required by pips
-# next required by smac
+# required by smac
 #gxx_linux-64 # required for smac
 #gcc_linux-64 # required for smac
-swig # required for smac
+swig
+emcee
+skopt
 # required by smac end
 # required by tf
 absl-py

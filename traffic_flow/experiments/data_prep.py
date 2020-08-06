@@ -13,6 +13,8 @@ from ezai import scalers
 import pandas as pd
 import numpy as np
 
+#TODO Replace os.path with pathlib.Path
+
 logger = log_util.get_logger(__name__)
 
 def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
