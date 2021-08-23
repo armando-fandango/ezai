@@ -1,7 +1,6 @@
 import tensorflow as tf
 
-from ezai.util import util
-from ezai.util import log_util
+from archived_code.ezai.util import log_util
 l = log_util.get_logger()
 
 def image_layout(x, old, new):

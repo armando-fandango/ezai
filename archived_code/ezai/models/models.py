@@ -7,7 +7,6 @@ from pickle import dump as pickle_dump
 from tensorflow.keras.callbacks import EarlyStopping as k_EarlyStopping
 from tensorflow.keras.callbacks import ModelCheckpoint as k_ModelCheckpoint
 import torch
-from ..util import pt_util
 from ..util import dict_util
 
 from .. import metrics
@@ -16,7 +15,7 @@ class TemporalModel(object):
     def __init__(self):
         pass
 
-    def build(self, conf:dict_util.DictObj):
+    def build(self, conf: dict_util.DictObj):
         # TODO: the following doesnt work out of blue sometimes
         # remove it when you can
         # if not isinstance(conf, Conf):

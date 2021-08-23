@@ -5,20 +5,15 @@ import numpy as np
 import pandas as pd
 import dask.dataframe as dd
 
-from ezai.data.dataset import Dataset
-from ezai.util import df_util
-from ezai.util import np_util
-from ezai.util import log_util
-from ezai.util import util
+from archived_code.ezai.data.dataset import Dataset
+from archived_code.ezai.util import np_util
+from archived_code.ezai.util import log_util
 
 logger = log_util.get_logger()
 
 from typing import Union, Optional
 
 dftypes = Union[pd.DataFrame, pd.Series, dd.DataFrame, dd.Series]
-
-from matplotlib import pyplot as plt
-import os, math
 
 """
 Notes:
@@ -69,12 +64,12 @@ class TemporalDataset(Dataset):
         #  1. does dt_col exist and is datetime ?
         #  2. Is time series empty ? or has at least 3 rows ?
         if df is None:
-            log_util.log_and_raise(ValueError('df is passed as NoneType'),logger)
+            log_util.log_and_raise(ValueError('df is passed as NoneType'), logger)
         #if not isinstance(df,dftypes):
         #    log_util.log_and_raise(ValueError('df not one of the legal dftypes'),logger)
         if len(df)<3:
             #logger.error("ValueError: " + message)
-            log_util.log_and_raise(ValueError('df must have minimum 3 rows'),logger)
+            log_util.log_and_raise(ValueError('df must have minimum 3 rows'), logger)
 
         self.df = df.copy() if copy else df
 

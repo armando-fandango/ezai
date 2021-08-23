@@ -1,11 +1,10 @@
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 from collections import OrderedDict
 import numpy as np
 
-from ezai.util import log_util
+from archived_code.ezai.util import log_util
 l = log_util.get_logger()
 
 

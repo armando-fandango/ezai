@@ -1,15 +1,12 @@
-import os
 import numpy as np
 
 from .models import models
 from .util import util
-from .util import filesystem_util
 
 from smac.facade.smac_hpo_facade import SMAC4HPO
 from smac.configspace import json as smac_json
 from smac.scenario.scenario import Scenario
 
-import smac
 
 def configspace_to_json_file(configspace, filename):
     with open(filename, 'w') as f:

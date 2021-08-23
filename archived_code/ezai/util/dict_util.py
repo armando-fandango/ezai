@@ -2,7 +2,7 @@ import json
 import copy
 import numpy as np
 
-from ezai.util import log_util
+from archived_code.ezai.util import log_util
 l = log_util.get_logger()
 
 def load_dict_from_json(filename):

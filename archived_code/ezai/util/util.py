@@ -9,9 +9,9 @@ from six.moves.urllib.error import URLError
 from six.moves.urllib.request import urlretrieve
 from six.moves import urllib
 
-from ezai.util.archive import archive_extract
-from ezai.util import filesystem_util
-from ezai.util import log_util
+from archived_code.ezai.util.archive import archive_extract
+from archived_code.ezai.util import filesystem_util
+from archived_code.ezai.util import log_util
 
 l = log_util.get_logger()
 

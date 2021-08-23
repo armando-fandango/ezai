@@ -1,6 +1,6 @@
 import abc
 
-from ezai.util import log_util
+from archived_code.ezai.util import log_util
 
 logger = log_util.get_logger()
 

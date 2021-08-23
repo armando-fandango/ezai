@@ -6,15 +6,13 @@ import os
 import math
 import pandas as pd
 
-from ezai.data import datasets_root
-from ezai.util import dict_util
-from ezai.util import df_util
-from ezai.util import vis_util
-from ezai.util import util
-from ezai.data import temporal
+from archived_code.ezai.data import datasets_root
+from archived_code.ezai.util import dict_util
+from archived_code.ezai.util import df_util
+from archived_code.ezai.util import vis_util
+from archived_code.ezai.data import temporal
 
 from matplotlib import pyplot as plt
-import seaborn as sns
 
 # TODO: Reafctor into geo utils if more datasets need it
 dir2code = frozenbidict({
@@ -153,7 +151,7 @@ def nullity_analysis(df):
     df = df.reindex(columns=s.index)
     """
     for var in df.columns.levels[0]:
-        df1 = df_util.nullity_filter(df.loc[:,var], p=0, n=0, axis=0, ascending=False)
+        df1 = df_util.nullity_filter(df.loc[:, var], p=0, n=0, axis=0, ascending=False)
         #col_list = s.loc[var,:].index
         nullity_plot(df1,var)
         del df1
@@ -174,11 +172,11 @@ def nullity_plot(df,var):
     #TODO replace with proper import after PR is pulled
     #m_path = os.path.join(os.path.expanduser('~'),'projects','missingno')
     #msno = util.m_load('missingno',m_path)
-    fig = vis_util.nullity_plot_matrix(df.iloc[:,:],
-                freq=freq,
-                fontsize=12,
-                labels=True,
-                sparkline=True,orientation='left')
+    fig = vis_util.nullity_plot_matrix(df.iloc[:, :],
+                                       freq=freq,
+                                       fontsize=12,
+                                       labels=True,
+                                       sparkline=True, orientation='left')
     #fig.suptitle(var,fontsize='xx-large')
     #plt.savefig('matrix_left_nosparkline.png', bbox_inches='tight')
     plt.show()
@@ -293,9 +291,9 @@ class RITISDetector():
             if ID in col_list:
                 if k=='meta':
                     df.loc[:, ID] = df_util.as_ordered_category(df.loc[:, ID],
-                                                            order_type = 'geo',
-                                                            ascending=True,
-                                                pts = df.loc[:,['lon','lat']])
+                                                                order_type = 'geo',
+                                                                ascending=True,
+                                                                pts = df.loc[:,['lon','lat']])
                 else:
                     df.loc[:, ID] = df_util.as_ordered_category(df.loc[:, ID],
                                     self.df['meta'].loc[:, ID].cat.categories)
@@ -317,7 +315,7 @@ class RITISDetector():
             print('---------')
             df = self.df.meta
             print('Total records: ', df.id.nunique())
-            print('Memory usage: ',df_util.memory_usage(df))
+            print('Memory usage: ', df_util.memory_usage(df))
             if not df[ID].is_unique:
                 print('Error : has duplicated zone_id')
 
@@ -340,7 +338,7 @@ class RITISDetector():
             print('---------')
             df = self.df.zone
             print('Total records: ', df.id.count())
-            print('Memory usage: ',df_util.memory_usage(df))
+            print('Memory usage: ', df_util.memory_usage(df))
             print('Unique id: ', df.id.nunique())
             print('dt stats:')
             print('min: ', df.dt.min())

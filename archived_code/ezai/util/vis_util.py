@@ -3,16 +3,12 @@ import math
 import time
 import tempfile
 
-import shutil
-
-from ezai.util import util
-from ezai.data import image
+from archived_code.ezai.data import image
 
 import pandas as pd
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import seaborn as sns
 #from mpl_toolkits.basemap import Basemap
 
 
@@ -449,7 +445,7 @@ def nullity_plot_matrix(df,
 #TODO: what if there are multiple files to show ???
 def show_image_file(filename,width=5,height=5):
     # reading png image file
-    img = cv2.cvtColor(image.load_image(filename),cv2.COLOR_BGR2RGB)
+    img = cv2.cvtColor(image.load_image(filename), cv2.COLOR_BGR2RGB)
     # show image
     plt.figure(figsize = (width,height))
     plt.imshow(img)

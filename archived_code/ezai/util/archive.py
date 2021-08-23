@@ -2,9 +2,8 @@ import bz2
 import gzip
 import zipfile
 import tarfile
-import os
 
-from ezai.util import filesystem_util
+from archived_code.ezai.util import filesystem_util
 
 
 class Archive():

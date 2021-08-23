@@ -1,16 +1,10 @@
 import numpy as np
 
-from numpy.testing import assert_allclose
 from numpy.testing import assert_almost_equal
-from numpy.testing import assert_approx_equal
-from numpy.testing import assert_array_equal
 from numpy.testing import assert_array_almost_equal
-from numpy.testing import assert_array_less
 
 import unittest
 from . import scalers
-
-import ddt
 
 # Make some data to be used many times
 rs = np.random.RandomState(0)

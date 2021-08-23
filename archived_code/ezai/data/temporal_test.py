@@ -1,12 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from numpy.testing import assert_allclose
-from numpy.testing import assert_almost_equal
-from numpy.testing import assert_approx_equal
 from numpy.testing import assert_array_equal
-from numpy.testing import assert_array_almost_equal
-from numpy.testing import assert_array_less
 
 import unittest
 import ddt
@@ -67,11 +62,11 @@ class TestTDUtil(unittest.TestCase):
     )
     @ddt.unpack
     def test_np_to_xy(self,data,x,y,n_tx,n_ty,h):
-        xy = temporal.np_to_xy(data,n_tx=n_tx, n_ty=n_ty, h=h, dim3=False)
+        xy = temporal.np_to_xy(data, n_tx=n_tx, n_ty=n_ty, h=h, dim3=False)
         assert_array_equal(x,xy[0])
         assert_array_equal(y,xy[1])
 
-        xy = temporal.np_to_xy(data,n_tx=n_tx, n_ty=n_ty, h=h, dim3=True)
+        xy = temporal.np_to_xy(data, n_tx=n_tx, n_ty=n_ty, h=h, dim3=True)
         #print('data.shape={},n_tx={}, n_ty={}, h={}, td_xy[0].shape={},td_xy[1].shape={}'.format(data.shape,n_tx, n_ty, h, td_xy[0].shape,td_xy[1].shape) )
         assert_array_equal(x.reshape(-1,n_tx,data.shape[1]),xy[0])
         assert_array_equal(y.reshape(-1,n_ty,data.shape[1]),xy[1])

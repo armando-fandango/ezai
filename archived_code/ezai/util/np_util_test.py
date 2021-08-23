@@ -1,11 +1,6 @@
 import numpy as np
 
-from numpy.testing import assert_allclose
-from numpy.testing import assert_almost_equal
-from numpy.testing import assert_approx_equal
 from numpy.testing import assert_array_equal
-from numpy.testing import assert_array_almost_equal
-from numpy.testing import assert_array_less
 
 import unittest
 from . import np_util
@@ -51,7 +46,7 @@ class Test_np_util(unittest.TestCase):
     )
     @ddt.unpack
     def test_shift_inplace(self,a,n,fill_value,e_b,copy=False):
-        b = np_util.shift(a,n,fill_value,copy)
+        b = np_util.shift(a, n, fill_value, copy)
         self.assertIs(a,b)
         assert_array_equal(b,e_b)
 
@@ -65,7 +60,7 @@ class Test_np_util(unittest.TestCase):
     )
     @ddt.unpack
     def test_shift_copy(self,a,n,fill_value,e_b,copy=True):
-        b = np_util.shift(a,n,fill_value,copy)
+        b = np_util.shift(a, n, fill_value, copy)
         self.assertIsNot(a,b)
         assert_array_equal(b,e_b)
 
