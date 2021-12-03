@@ -1,6 +1,6 @@
 import setuptools
 
-with open('../version.txt', 'r') as vf:
+with open('ezai_util/version.txt', 'r') as vf:
     __version__ = vf.read().strip()
 
 # TODO: Replace the long description comments once cleared

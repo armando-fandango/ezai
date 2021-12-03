@@ -1,0 +1,2 @@
+include MANIFEST.in
+include ezai_util/version.txt
