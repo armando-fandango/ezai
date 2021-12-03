@@ -18,7 +18,7 @@ def n3_local(args):
     if not PKG_PATH in sys.path:
         sys.path.append(PKG_PATH)
     print(sys.path)
-    from traffic_flow.experiments import exp
+    from archived_code.traffic_flow.experiments import exp
 
     """
     while getopts ":e:i:d:n:o:tu" opt; do
@@ -63,13 +63,13 @@ def n3_local(args):
                 with redirect_stderr(sys.stdout):
 
                     exp.n3(exp_id=exp_id,
-                       exp_iid=exp_iid,
-                       exp_tid=tid,
-                       exp_did=exp_did,
-                       exp_out=str(exp_out_path.resolve()),
-                       exp_data=str(exp_data_path.resolve()),
-                       autotune=not args.notune,
-                       testmode=args.test)
+                           exp_iid=exp_iid,
+                           exp_tid=tid,
+                           exp_did=exp_did,
+                           exp_out=str(exp_out_path.resolve()),
+                           exp_data=str(exp_data_path.resolve()),
+                           autotune=not args.notune,
+                           testmode=args.test)
     #    eval "${EXPRUN_COMMAND}"
     # >> ${EXP_LOG} means append the stdout to file
     # 2>&1 this means redirect stderr to stdout

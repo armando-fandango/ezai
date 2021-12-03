@@ -39,9 +39,9 @@ def n3(exp_id,
     EZAI_ROOT=os.path.join(os.path.expanduser('~'),'projects','ezai')
     if not EZAI_ROOT in sys.path:
         sys.path.append(EZAI_ROOT)
-    import ezai
+    from archived_code import ezai
 
-    from ezai.util import util
+    from archived_code.ezai.util import util
     util.m_info([ezai])
 
     # TODO : uncomment this when done with experiments
@@ -49,10 +49,11 @@ def n3(exp_id,
     #if not tf_util.gpu_test():
     #    raise ValueError("Not using GPU")
 
-    from ezai.util import util, filesystem_util, dict_util
-    from ezai.util.filesystem_util import makedir
-    from ezai.util.dict_util import load_dict_from_json
-    from ezai import automl
+    from archived_code.ezai.util import filesystem_util, dict_util
+    from archived_code.ezai.util import util
+    from archived_code.ezai.util.filesystem_util import makedir
+    from archived_code.ezai.util.dict_util import load_dict_from_json
+    from archived_code.ezai import automl
 
     script_folder, _ = os.path.split(sys.argv[0]) #where is this program
     exp_conf = dict_util.DictObj(os.path.join(script_folder,
@@ -161,8 +162,8 @@ def n3(exp_id,
     n_rows = min(xy['x'].shape[0] , n_rows)
 
     print('taking ',n_rows,' rows')
-    x_train, x_valid, x_test = util.tvt_split(xy['x'][-n_rows:] )
-    y_train, y_valid, y_test = util.tvt_split(xy['y'][-n_rows:] )
+    x_train, x_valid, x_test = util.tvt_split(xy['x'][-n_rows:])
+    y_train, y_valid, y_test = util.tvt_split(xy['y'][-n_rows:])
 
     print('shapes of x train, valid and test :',x_train.shape,x_valid.shape,x_test.shape)
     print('shapes of x train, valid and test :',y_train.shape,y_valid.shape,y_test.shape)

@@ -1,14 +1,12 @@
 import os
 
-import ezai.data.temporal
-from ezai.data import temporal
-from ezai.data import ritis
-from ezai.util import util
-from ezai.util import filesystem_util
-from ezai.util import log_util
-from ezai.util import dict_util
-from ezai.util import df_util
-from ezai import scalers
+import archived_code.ezai.data.temporal
+from archived_code.ezai.data import temporal, ritis
+from archived_code.ezai.util import util
+from archived_code.ezai.util import filesystem_util
+from archived_code.ezai.util import log_util
+from archived_code.ezai.util import dict_util
+from archived_code.ezai import scalers
 
 import pandas as pd
 import numpy as np
@@ -17,7 +15,7 @@ import numpy as np
 
 logger = log_util.get_logger(__name__)
 
-def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
+def n3_build_data(rd: ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
     # adj_id 0 means select all
     # 1-5 speed field only
     # 1-15 speed field with 15 min agg
@@ -117,7 +115,7 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                       .format(parquet_folder))
                 # Not saving first and last for spatial analysis purpose
                 dict_util.save_to_json({'id_list': id_list[1:-1]},
-                                        os.path.join(parquet_folder, 'id_list.json'))
+                                       os.path.join(parquet_folder, 'id_list.json'))
                 meta_grp.to_parquet(os.path.join(
                     parquet_folder, 'meta.parquet'),
                     engine='pyarrow')
@@ -136,17 +134,17 @@ def n3_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                         if conf.trim_partial_weeks:
                             from_ts = temporal.next_weekday(dt_grp[DT].min())
                             to_ts = temporal.next_weekday(dt_grp[DT].max(),
-                                                                    weekday=6,
-                                                                    next=False)
+                                                          weekday=6,
+                                                          next=False)
                             tdf = dt_grp[((dt_grp[DT] >= from_ts) &
                                           (dt_grp[DT] <= to_ts))]
                         else:
                             tdf = dt_grp
                         # interpolate all available weeks for one single id
-                        tdf_x = ezai.data.temporal.interpolate(tdf, DT, freq='5T',
-                                                               new_freq='{}T'.format(conf.n_agg))
-                        tdf_y = ezai.data.temporal.interpolate(tdf, DT, freq='5T',
-                                                               new_freq='30T'.format(conf.n_agg))
+                        tdf_x = archived_code.ezai.data.temporal.interpolate(tdf, DT, freq='5T',
+                                                                             new_freq='{}T'.format(conf.n_agg))
+                        tdf_y = archived_code.ezai.data.temporal.interpolate(tdf, DT, freq='5T',
+                                                                             new_freq='30T'.format(conf.n_agg))
                         #TODO: replace above with n_ty_step * 5T
                         idf_x = idf_x.append(tdf_x, ignore_index=True)
                         idf_y = idf_y.append(tdf_y, ignore_index=True)
@@ -291,15 +289,15 @@ def n3_to_xy(dfxy, conf, dim3 = True):
         if n_rows < 10:
             print('not enough rows, only {}, thus skipping {}'.format(len(group_x),key))
         else:
-            xy, _ = temporal.dfs_to_xy(group_x,group_y,
-                                 n_tx=n_tx,
-                                 n_ty=n_ty,
-                                 n_tx_step=n_tx_step,
-                                 n_ty_step=n_ty_step,
-                                 h=h,
-                                 x_cols=x_cols,
-                                 y_cols=y_cols,
-                                 dim3 = dim3)
+            xy, _ = temporal.dfs_to_xy(group_x, group_y,
+                                       n_tx=n_tx,
+                                       n_ty=n_ty,
+                                       n_tx_step=n_tx_step,
+                                       n_ty_step=n_ty_step,
+                                       h=h,
+                                       x_cols=x_cols,
+                                       y_cols=y_cols,
+                                       dim3 = dim3)
             if dim3:
                 #xy_np[0].append(xy_np[0],[xy[0]], axis=0)
                 #xy_np[1].append(xy_np[1],[xy[1]], axis=0)
@@ -318,7 +316,7 @@ def n3_to_xy(dfxy, conf, dim3 = True):
         xy = xy_df #pd.concat(xy_list)
     return xy
 
-def n2_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
+def n2_build_data(rd: ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
     # adj_id 0 means select all
     # 1-5 speed field only
     # 1-15 speed field with 15 min agg
@@ -421,8 +419,8 @@ def n2_build_data(rd:ritis.RITISDetector, conf, expdata_home, n_adj_id=0):
                         else:
                             tdf = dt_grp
                         # interpolate all available weeks for one single id
-                        tdf = ezai.data.temporal.interpolate(tdf, DT, freq='5T',
-                                                             new_freq='{}T'.format(conf.n_agg))
+                        tdf = archived_code.ezai.data.temporal.interpolate(tdf, DT, freq='5T',
+                                                                           new_freq='{}T'.format(conf.n_agg))
                         idf = idf.append(tdf, ignore_index=True)
                     # idf has interpolated data of selected id, all months and years
                     # take only selected weekdays
@@ -563,7 +561,7 @@ def n2_to_xy(df, conf, dim3 = True):
         xy = xy_rdf #pd.concat(xy_list)
     return xy
 
-def build_ds_exp_1(rd:ritis.RITISDetector, conf, expdata_folder, n_adj_id=0):
+def build_ds_exp_1(rd: ritis.RITISDetector, conf, expdata_folder, n_adj_id=0):
     # adj_id 0 means select all
     # 1-5 speed field only
     # 1-15 speed field with 15 min agg
@@ -647,20 +645,20 @@ def build_ds_exp_1(rd:ritis.RITISDetector, conf, expdata_folder, n_adj_id=0):
                             [gdf[DT].dt.year, gdf[DT].dt.month]):
 
                         if conf.trim_partial_weeks:
-                            from_ts = ezai.data.temporal.next_weekday(dt_grp[DT].min())
-                            to_ts = ezai.data.temporal.next_weekday(dt_grp[DT].max(),
-                                                                    weekday=6,
-                                                                    next=False)
+                            from_ts = archived_code.ezai.data.temporal.next_weekday(dt_grp[DT].min())
+                            to_ts = archived_code.ezai.data.temporal.next_weekday(dt_grp[DT].max(),
+                                                                                  weekday=6,
+                                                                                  next=False)
                             mdf = dt_grp[((dt_grp[DT] >= from_ts) &
                                           (dt_grp[DT] <= to_ts))]
 
                         else:
                             mdf = dt_grp
                         # interpolate all available weeks for one single id
-                        mdf = ezai.data.temporal.interpolate(mdf,
-                                                             DT,
-                                                             freq='5T',
-                                                             sfreq='{}T'.format(conf.n_agg))
+                        mdf = archived_code.ezai.data.temporal.interpolate(mdf,
+                                                                           DT,
+                                                                           freq='5T',
+                                                                           sfreq='{}T'.format(conf.n_agg))
                         rdf = rdf.append(mdf, ignore_index=True)
 
                     # rdf has interpolated data of selected id, all months and years

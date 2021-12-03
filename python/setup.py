@@ -1,6 +1,6 @@
 import setuptools
 
-with open('ezai_util/version.txt', 'r') as vf:
+with open('ezai/version.txt', 'r') as vf:
     __version__ = vf.read().strip()
 
 # TODO: Replace the long description comments once cleared
@@ -9,11 +9,11 @@ with open('ezai_util/version.txt', 'r') as vf:
 long_description = " "
 
 setuptools.setup(
-    name="ezai_util",
+    name="ezai",
     version=__version__,
     author="Armando Fandango",
     author_email="armando@neurasights.com",
-    description="EZAI Utilities and Tools",
+    description="Easy AI Toolkit",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
