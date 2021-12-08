@@ -1,0 +1,46 @@
+# these software can't be found on conda channels hence installed through pip
+# keep most imortant at the end
+
+scikit-posthocs
+
+torchsummary
+
+# needed for tensorflow
+#tensorflow-estimator
+#keras-applications
+#keras-preprocessing
+#keras-tuner
+# needed for tensorflow ends
+#tensorflow<=2.5
+
+
+# needed for detectron
+
+
+# needed for detectron ends
+# detectron2 @ https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.6/detectron2-0.3%2Bcu101-cp38-cp38-linux_x86_64.whl
+#https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.6/index.html
+
+# needed for gym
+opencv-python
+#atari-py
+# needed for gym end
+gym==0.18.0
+
+# unity begin
+# release 18, c# 1.5.0, py 0.27
+#mlagents==0.27.0
+#mlagents_envs==0.27.0
+#navsim_mlagents_envs==0.27.0
+#gym_unity==0.27.0
+
+# unity end
+
+stable-baselines3[extra]
+https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp38-cp38-manylinux2014_x86_64.whl
+
+sphinx-rtd-theme
+
+#navsim>=2.10,<2.11
+#navsim_envs>=2.10,<2.11
+ray[all]

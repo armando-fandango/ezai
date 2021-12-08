@@ -1,0 +1,105 @@
+# basic python env
+pytest>=5.0.1
+ddt
+cython
+pip>=20.2.2
+
+# python related
+attrs
+cattrs
+bidict
+tqdm
+pyyaml
+click
+twine  # for pypi
+ifcfg
+sphinx # for docs
+sphinx_rtd_theme
+recommonmark
+myst-parser
+docutils<0.17 #docutils > 0.17 has bug and doesnt format correctly
+
+# basic data science
+hypothesis>=3.58 # needed by pandas but doesnt install on win64
+scipy>=1.5.0
+pandas>=1.1.0
+matplotlib>=3.3.0
+
+#graph related
+# networkx>=2.4
+# neo4j-python-driver>=4.1.0
+
+# visualization related
+seaborn>=0.10.0
+# bokeh>=2.0.0
+
+# graphviz
+# python-graphviz
+#terminaltables
+#tabulate
+
+# image / vision related
+ffmpeg>=4.3
+opencv>=4.4
+imageio>=2.9
+pillow<=7.2.0
+
+# ml/dl/rl related
+onnx
+scikit-learn>=0.23.0
+scikit-image
+scikit-optimize
+scikit-fmm
+
+python-snappy
+pyarrow>=1.0  #  dont use fastparquet
+dask>=2.23
+h5py=2.10.0
+
+# **** required by pips
+
+# required by tf
+google-pasta=0.2
+protobuf
+absl-py
+wrapt
+astunparse
+termcolor
+opt-einsum
+gast=0.3.3
+flatbuffers
+terminaltables
+# required by tf ends
+
+# required by tensorboard
+grpcio=1.32.0
+markdown
+werkzeug
+google-auth-oauthlib
+tensorboard-data-server
+tensorboard-plugin-wit
+tensorboard
+# required by tensorboard
+
+# required by gym
+glfw
+box2d-py
+pyglet<=1.5.0
+# required by gym end
+#gym=0.18.0
+
+#required by ray rllib
+redis-py
+atari_py
+gputil
+filelock
+jsonschema
+dm-tree
+tabulate
+lz4
+aiohttp-cors
+tensorboardx
+prometheus_client
+aioredis
+pydantic
+opencensus
