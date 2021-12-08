@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# from https://github.com/armando-fandango/ezai
 
 activate () {
   conda activate $1 || source activate $1

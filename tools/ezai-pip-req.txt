@@ -1,3 +1,4 @@
+# from https://github.com/armando-fandango/ezai
 # these software can't be found on conda channels hence installed through pip
 # keep most imortant at the end
 
